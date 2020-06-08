@@ -1,11 +1,16 @@
 package com.aor.generadorringtones;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import java.util.List;
+
 import nl.bravobit.ffmpeg.ExecuteBinaryResponseHandler;
 import nl.bravobit.ffmpeg.FFmpeg;
+
+import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 public class Comandos {
 private Context context;
@@ -22,8 +27,7 @@ private TextView text;
             return null;
         }
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("-y ")
-                .append("-i ")
+        stringBuilder.append("-i ")
                 .append(inputFileUrl).append(" ")
                 .append("-ss ")
                 .append(start).append(" ")
@@ -35,13 +39,11 @@ private TextView text;
         return stringBuilder.toString();
     }
 
-    public void Ejecutar( String comando){
+    public void Ejecutar(String[] comando){
         if (FFmpeg.getInstance(context).isSupported()) {
 
             FFmpeg ffmpeg = FFmpeg.getInstance(context);
-            String[] cmd = new String[1];
-            cmd[0] = comando;
-            ffmpeg.execute(cmd, new ExecuteBinaryResponseHandler() {
+            ffmpeg.execute(comando, new ExecuteBinaryResponseHandler() {
 
                 @Override
                 public void onStart() {}

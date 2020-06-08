@@ -5,13 +5,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
-
-
-
 
 
 public class Archivos {
@@ -64,7 +60,7 @@ public class Archivos {
         return  dato;
     }
 
-    public  String getPathFromURI(final Uri uri) {
+    public String getPathFromURI(final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
