@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aor.creadorigtones.ui.home.HomeFragment;
+import com.aor.creadorigtones.ui.home.HomeViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -116,14 +118,15 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == Archivos.READ_REQUEST_CODE){
             Definir_inputs_Cortar();
             Uri uri = data.getData();
+
             dato = archivos.Get_MetaData(uri);
+            HomeFragment.textView.setText(dato.getNombre());
             try {
                 path = archivos.getPath(uri);
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
             text = findViewById(R.id.titulo);
-            text.setText(dato.getNombre());
             file = new File(path);
 
         }
