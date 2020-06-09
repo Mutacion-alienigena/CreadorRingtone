@@ -62,9 +62,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         archivos = new Archivos(getApplicationContext());
-
-        inicio = findViewById(R.id.inicio);
-        fin = findViewById(R.id.fin);
     }
 
     @Override
@@ -117,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode,int resultCode,Intent data){
 
         if(requestCode == Archivos.READ_REQUEST_CODE){
-
+            Definir_inputs_Cortar();
             Uri uri = data.getData();
             dato = archivos.Get_MetaData(uri);
             try {
@@ -126,19 +123,25 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             text = findViewById(R.id.titulo);
-            text.setText("path" + path);
-            //file = new File(path);
+            text.setText(dato.getNombre());
+            file = new File(path);
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void Cortar_MP3(){
-        File nuevo = new File(file.getParent() +  "/" + dato.getNombre()
-                .split(".")[0] + "_cut.mp3");
+
+        File nuevo = new File(file.getParent() +  "/" + "cut.mp3");
         text.setText(file.getName());
         Comandos comandos = new Comandos(getApplicationContext(),text);
         String[] command = comandos.getSplitCommand(path,nuevo.getAbsolutePath(),inicio.getText().
                 toString(),fin.getText().toString()).split(" ");
         comandos.Ejecutar(command);
+    }
+
+    public void Definir_inputs_Cortar(){
+        inicio = findViewById(R.id.inicio);
+        fin = findViewById(R.id.fin);
     }
 }
