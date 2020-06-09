@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">CreadoRigtones</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="app_name">CreadorRingtones</string>
+    <string name="navigation_drawer_open">Abrir ventana de navegacion</string>
+    <string name="navigation_drawer_close">Cerrar ventana de navegacion</string>
+    <string name="nav_header_title">Creador de Ringtones</string>
+    <string name="nav_header_subtitle">matias.ortiz1@davinci.edu.ar</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configuracion</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_home">Cortar Cancion</string>
+    <string name="menu_gallery">Bajar Canciones de Youtube</string>
+    <string name="menu_slideshow">Menu desplegable</string>
 </resources>
