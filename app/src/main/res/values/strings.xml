@@ -6,6 +6,11 @@
     <string name="nav_header_subtitle">matias.ortiz1@davinci.edu.ar</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configuracion</string>
+    <string name="action_reproducir">Reproducir Cancion</string>
+    <string name="action_cortar">Cortar Cancion</string>
+    <string name="action_abrir">Abrir Cancion</string>
+    <string name="action_generar">Generar Ringtone</string>
+
 
     <string name="menu_home">Cortar Cancion</string>
     <string name="menu_gallery">Bajar Canciones de Youtube</string>
