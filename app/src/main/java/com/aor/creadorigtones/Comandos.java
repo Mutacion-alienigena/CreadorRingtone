@@ -3,6 +3,8 @@ package com.aor.creadorigtones;
 import android.content.Context;
 import android.text.TextUtils;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import nl.bravobit.ffmpeg.ExecuteBinaryResponseHandler;
 import nl.bravobit.ffmpeg.FFmpeg;
 
@@ -34,7 +36,7 @@ private TextView text;
         return stringBuilder.toString();
     }
 
-    public void Ejecutar(String[] comando){
+    public void Ejecutar(String[] comando, final String nombre_cancion){
         if (FFmpeg.getInstance(context).isSupported()) {
 
             FFmpeg ffmpeg = FFmpeg.getInstance(context);
@@ -45,17 +47,20 @@ private TextView text;
 
                 @Override
                 public void onProgress(String message) {
-                    text.setText(message);
+
+
                 }
 
                 @Override
                 public void onFailure(String message) {
-                    text.setText(message);
+                    Toast.makeText(context, "Ocurrio un error cortando la cancion",
+                            Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onSuccess(String message) {
-                    text.setText(message);
+                    Toast.makeText(context, "Se guardo la cancion con el nombre: " + nombre_cancion,
+                            Toast.LENGTH_LONG).show();
                 }
 
 

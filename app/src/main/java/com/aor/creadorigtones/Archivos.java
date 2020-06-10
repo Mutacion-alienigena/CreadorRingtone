@@ -1,15 +1,16 @@
 package com.aor.creadorigtones;
+
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
-import android.util.Log;
 
 import java.net.URISyntaxException;
 
@@ -33,9 +34,19 @@ public class Archivos {
         this.context = context;
     }
 
-    public Dato Get_MetaData(Uri uri) {
+    public Dato Get_MetaData(Uri uri) throws URISyntaxException {
+
 
         Dato dato = new Dato();
+
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(this.getPath(uri));
+
+        String albumName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+        dato.SetAlbum(albumName);
+        dato.SetTitulo(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
+        dato.SetDuracion(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+        dato.SetImagen(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_IMAGE_PRIMARY));
         Cursor cursor = context.getContentResolver()
                 .query(uri, null, null, null, null, null);
 

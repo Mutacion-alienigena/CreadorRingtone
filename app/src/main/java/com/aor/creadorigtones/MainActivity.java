@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aor.creadorigtones.ui.home.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.abrir_cancion:
                 startActivityForResult(Intent.createChooser(archivos.Buscar_archivo
@@ -89,18 +89,18 @@ public class MainActivity extends AppCompatActivity {
                         Archivos.READ_REQUEST_CODE);
                 return true;
 
-                case R.id.generar_ringtone:
-                    try{
+            case R.id.generar_ringtone:
+                try{
                     Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
                     intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
                     intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Seleccionar Tono");
                     startActivityForResult(intent,5);
-                    }catch (ActivityNotFoundException exception){
-                        Toast.makeText(getApplicationContext(), "No hay una aplicacion vinculada "
-                                + "para abrir la cancion", Toast.LENGTH_LONG).show();
-                    }
-                    return true;
-                case R.id.reproducir:
+                }catch (ActivityNotFoundException exception){
+                    Toast.makeText(getApplicationContext(), "No hay una aplicacion vinculada "
+                            + "para abrir la cancion", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            case R.id.reproducir:
                 try{
                     Intent intent_abrir_cancion = new Intent();
                     intent_abrir_cancion.setAction(android.content.Intent.ACTION_VIEW);
@@ -116,7 +116,10 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
             case R.id.cortar:
-                Cortar_MP3();
+                HomeFragment fragment =  new HomeFragment();
+                TextView nombre_cancion =  findViewById(R.id.nombre_cancion);
+                fragment.setContext(getApplicationContext());
+                fragment.Cortar_MP3(file,path,text,inicio,fin,nombre_cancion);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -129,29 +132,28 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == Archivos.READ_REQUEST_CODE){
             Definir_inputs_Cortar();
             Uri uri = data.getData();
-            dato = archivos.Get_MetaData(uri);
+            try {
+                dato = archivos.Get_MetaData(uri);
+                fin.setText(dato.getDuracion());
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
             try {
                 path = archivos.getPath(uri);
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
             text = findViewById(R.id.titulo);
-            text.setText(dato.getNombre());
+            text.setText(dato.getAlbum());
+            TextView titulo = findViewById(R.id.text_home);
+            titulo.setText(dato.getTitulo());
             file = new File(path);
 
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void Cortar_MP3(){
 
-        File nuevo = new File(file.getParent() +  "/" + "cut.mp3");
-        text.setText(file.getName());
-        Comandos comandos = new Comandos(getApplicationContext(),text);
-        String[] command = comandos.getSplitCommand(path,nuevo.getAbsolutePath(),inicio.getText().
-                toString(),fin.getText().toString()).split(" ");
-        comandos.Ejecutar(command);
-    }
 
     public void Definir_inputs_Cortar(){
         inicio = findViewById(R.id.inicio);
