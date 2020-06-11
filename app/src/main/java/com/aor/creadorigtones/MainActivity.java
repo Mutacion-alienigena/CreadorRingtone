@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+<<<<<<< HEAD
 import android.widget.Button;
+=======
+>>>>>>> 61355ce78464ad2430c65871c22b0ff60ff65b08
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,12 +22,20 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+<<<<<<< HEAD
 
 import com.aor.creadorigtones.ui.home.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+=======
+>>>>>>> 61355ce78464ad2430c65871c22b0ff60ff65b08
 
+import com.aor.creadorigtones.ui.home.HomeFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import  android.widget.Button;
 import java.io.File;
 import java.net.URISyntaxException;
 
@@ -195,6 +206,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+<<<<<<< HEAD
     }
 
 
+=======
+}
+>>>>>>> 61355ce78464ad2430c65871c22b0ff60ff65b08
