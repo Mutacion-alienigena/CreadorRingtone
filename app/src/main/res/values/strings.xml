@@ -10,6 +10,8 @@
     <string name="action_cortar">Cortar Cancion</string>
     <string name="action_abrir">Abrir Cancion</string>
     <string name="action_generar">Generar Ringtone</string>
+    <string name="Buscar_youtube">Buscar UrL del video</string>
+    <string name="Url_Youtube_placeholder">Url a buscar</string>
 
 
     <string name="menu_home">Cortar Cancion</string>

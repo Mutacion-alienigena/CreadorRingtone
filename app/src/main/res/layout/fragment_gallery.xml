@@ -21,4 +21,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.03" />
+
+    <EditText
+        android:id="@+id/Url_youtube"
+        android:layout_width="386dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="textUri|textPersonName"
+        android:text="https://www.youtube.com/watch?v=tQJWTJ4lCLI"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_gallery" />
+
+    <Button
+        android:id="@+id/Buscar_Youtube"
+        android:layout_width="364dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/Buscar_youtube"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Url_youtube" />
 </androidx.constraintlayout.widget.ConstraintLayout>
