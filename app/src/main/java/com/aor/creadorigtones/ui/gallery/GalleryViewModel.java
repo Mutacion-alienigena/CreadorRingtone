@@ -10,6 +10,7 @@ public class GalleryViewModel extends ViewModel {
 
     public GalleryViewModel() {
         mText = new MutableLiveData<>();
+
         mText.setValue("Obtener Mp3 de un video");
     }
 

@@ -5,25 +5,25 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aor.creadorigtones.ui.home.HomeFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import com.aor.creadorigtones.ui.home.HomeFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import  android.widget.Button;
 import java.io.File;
 import java.net.URISyntaxException;
 
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private Dato dato;
     private TextView text;
     private TextView fin;
+    private  DrawerLayout drawer;
     private TextView inicio;
 
     @Override
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer= findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -64,11 +65,73 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         archivos = new Archivos(getApplicationContext());
+
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+
+        Button abrir_cancion = findViewById(R.id.abrir);
+        abrir_cancion.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(Intent.createChooser(archivos.Buscar_archivo
+                                (Archivos.musica), "Cancion a abrir"),
+                        Archivos.READ_REQUEST_CODE);
+            }
+        });
+
+        Button cortar = findViewById(R.id.Cortar_cancion);
+        cortar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                HomeFragment fragment = new HomeFragment();
+                TextView nombre_cancion = findViewById(R.id.nombre_cancion);
+                fragment.setContext(getApplicationContext());
+                fragment.Cortar_MP3(file,path,text,inicio,fin,nombre_cancion);
+            }
+        });
+
+        Button Generar_rigntone = findViewById(R.id.Generar_rigntone);
+        Generar_rigntone.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                try{
+                    Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Seleccionar Tono");
+                    startActivityForResult(intent,5);
+                }catch (ActivityNotFoundException exception){
+                    Toast.makeText(getApplicationContext(), "No hay una aplicacion vinculada "
+                            + "para asginarle el tono", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        Button Reproducir_cancion = findViewById(R.id.Reproducir_cancion);
+        Reproducir_cancion.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                try{
+                    Intent intent_abrir_cancion = new Intent();
+                    intent_abrir_cancion.setAction(android.content.Intent.ACTION_VIEW);
+                    intent_abrir_cancion.setDataAndType(Uri.parse(path), "audio/*");
+                    startActivity(intent_abrir_cancion);
+
+                }catch (ActivityNotFoundException exception){
+                    Toast.makeText(getApplicationContext(), "No hay una aplicacion vinculada "
+                            + "para abrir la cancion", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
         return true;
     }
 
@@ -83,44 +146,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.abrir_cancion:
-                startActivityForResult(Intent.createChooser(archivos.Buscar_archivo
-                                (Archivos.musica), "Cancion a abrir"),
-                        Archivos.READ_REQUEST_CODE);
-                return true;
 
-            case R.id.generar_ringtone:
-                try{
-                    Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Seleccionar Tono");
-                    startActivityForResult(intent,5);
-                }catch (ActivityNotFoundException exception){
-                    Toast.makeText(getApplicationContext(), "No hay una aplicacion vinculada "
-                            + "para abrir la cancion", Toast.LENGTH_LONG).show();
-                }
-                return true;
-            case R.id.reproducir:
-                try{
-                    Intent intent_abrir_cancion = new Intent();
-                    intent_abrir_cancion.setAction(android.content.Intent.ACTION_VIEW);
-                    intent_abrir_cancion.setDataAndType(Uri.parse(path), "audio/*");
-                    startActivity(intent_abrir_cancion);
-
-                }catch (ActivityNotFoundException exception){
-                    Toast.makeText(getApplicationContext(), "No hay una aplicacion vinculada "
-                            + "para abrir la cancion", Toast.LENGTH_LONG).show();
-                }
-                return true;
             case R.id.action_settings:
 
                 return true;
-            case R.id.cortar:
-                HomeFragment fragment =  new HomeFragment();
-                TextView nombre_cancion =  findViewById(R.id.nombre_cancion);
-                fragment.setContext(getApplicationContext());
-                fragment.Cortar_MP3(file,path,text,inicio,fin,nombre_cancion);
-                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -159,4 +189,7 @@ public class MainActivity extends AppCompatActivity {
         inicio = findViewById(R.id.inicio);
         fin = findViewById(R.id.fin);
     }
+
+
+
 }

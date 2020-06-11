@@ -8,10 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.aor.creadorigtones.Comandos;
 import com.aor.creadorigtones.R;
@@ -26,8 +24,7 @@ public class HomeFragment extends Fragment {
    private Context context;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        model =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+        model = new ViewModelProvider.NewInstanceFactory().create(HomeViewModel.class);
         root = inflater.inflate(R.layout.fragment_home, container, false);
           textView = root.findViewById(R.id.text_home);
 
@@ -49,4 +46,11 @@ public class HomeFragment extends Fragment {
     public void setContext(Context context) {
         this.context = context;
     }
+
+    public HomeViewModel getModel(){
+        return this.model;
+    }
+
+
+
 }

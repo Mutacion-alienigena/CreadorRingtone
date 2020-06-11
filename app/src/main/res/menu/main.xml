@@ -2,20 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/reproducir"
-        android:title="@string/action_reproducir" />
-    <item
-        android:id="@+id/cortar"
-        android:title="@string/action_cortar" />
-    <item
-        android:id="@+id/abrir_cancion"
-        android:title="@string/action_abrir" />
-    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/generar_ringtone"
-        android:title="@string/action_generar" />
 </menu>
