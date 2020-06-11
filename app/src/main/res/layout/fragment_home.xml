@@ -6,10 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <Button
+        android:id="@+id/Reproducir_cancion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
+        android:layout_weight="1"
+        android:text="@string/action_reproducir"
+        app:layout_constraintEnd_toStartOf="@+id/Generar_rigntone"
+        app:layout_constraintTop_toBottomOf="@+id/abrir" />
+
+    <Button
+        android:id="@+id/Generar_rigntone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
+        android:layout_weight="1"
+        android:text="@string/action_generar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Cortar_cancion" />
+
+    <Button
+        android:id="@+id/abrir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="52dp"
+        android:layout_weight="1"
+        android:text="@string/action_abrir"
+        app:layout_constraintEnd_toStartOf="@+id/Cortar_cancion"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_home" />
+
+    <Button
+        android:id="@+id/Cortar_cancion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="40dp"
+        android:layout_weight="1"
+        android:text="@string/action_cortar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_home" />
+
     <TextView
         android:id="@+id/text_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="374dp"
+        android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -24,10 +70,10 @@
 
     <TextView
         android:id="@+id/titulo"
-        android:layout_width="294dp"
-        android:layout_height="177dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="320dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="152dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_home" />
 
@@ -35,7 +81,7 @@
         android:id="@+id/inicio"
         android:layout_width="330dp"
         android:layout_height="49dp"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="52dp"
         android:layout_marginTop="28dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -47,8 +93,8 @@
         android:id="@+id/fin"
         android:layout_width="330dp"
         android:layout_height="49dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="108dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="00:00:25"
@@ -60,7 +106,7 @@
         android:layout_width="330dp"
         android:layout_height="49dp"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="156dp"
+        android:layout_marginTop="164dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Pone tu nombre"
