@@ -31,7 +31,7 @@
         android:autofillHints=""
         android:ems="10"
         android:inputType="textUri|textPersonName"
-        android:text="https://www.youtube.com/watch?v=tQJWTJ4lCLI"
+        android:text="https://www.youtube.com/watch?v=KYBok-XGsKM"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_gallery" />
 

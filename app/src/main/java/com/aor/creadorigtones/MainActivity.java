@@ -1,46 +1,47 @@
 package com.aor.creadorigtones;
 
+import android.Manifest;
+import android.app.Application;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-<<<<<<< HEAD
 import android.widget.Button;
-=======
->>>>>>> 61355ce78464ad2430c65871c22b0ff60ff65b08
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-<<<<<<< HEAD
 
 import com.aor.creadorigtones.ui.home.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-=======
->>>>>>> 61355ce78464ad2430c65871c22b0ff60ff65b08
+import com.yausername.youtubedl_android.YoutubeDL;
+import com.yausername.youtubedl_android.YoutubeDLException;
+import com.yausername.youtubedl_android.YoutubeDLRequest;
 
-import com.aor.creadorigtones.ui.home.HomeFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import  android.widget.Button;
 import java.io.File;
 import java.net.URISyntaxException;
 
 
+
 public class MainActivity extends AppCompatActivity {
+    public static Application get_aplication;
     Archivos archivos;
     File file;
     String path;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private  DrawerLayout drawer;
     private TextView inicio;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +61,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        get_aplication = getApplication();
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
         drawer= findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -77,7 +76,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         archivos = new Archivos(getApplicationContext());
-
+        if (!isStoragePermissionGranted()) {
+            Toast.makeText(getApplicationContext(), "No le diste el permiso para leer el " +
+                    "almacenamiento interno", Toast.LENGTH_LONG).show();
+            return;
+        }
 
     }
 
@@ -88,63 +91,44 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
 
         Button abrir_cancion = findViewById(R.id.abrir);
-        abrir_cancion.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(Intent.createChooser(archivos.Buscar_archivo
-                                (Archivos.musica), "Cancion a abrir"),
-                        Archivos.READ_REQUEST_CODE);
-            }
-        });
+        abrir_cancion.setOnClickListener(view -> startActivityForResult(Intent.createChooser(archivos.Buscar_archivo
+                        (Archivos.musica), "Cancion a abrir"),
+                Archivos.READ_REQUEST_CODE));
 
         Button cortar = findViewById(R.id.Cortar_cancion);
-        cortar.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                HomeFragment fragment = new HomeFragment();
-                TextView nombre_cancion = findViewById(R.id.nombre_cancion);
-                fragment.setContext(getApplicationContext());
-                fragment.Cortar_MP3(file,path,text,inicio,fin,nombre_cancion);
-            }
+        cortar.setOnClickListener(view -> {
+            HomeFragment fragment = new HomeFragment();
+            TextView nombre_cancion = findViewById(R.id.nombre_cancion);
+            fragment.setContext(getApplicationContext());
+            fragment.Cortar_MP3(file,path,text,inicio,fin,nombre_cancion);
         });
 
         Button Generar_rigntone = findViewById(R.id.Generar_rigntone);
-        Generar_rigntone.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                try{
-                    Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Seleccionar Tono");
-                    startActivityForResult(intent,5);
-                }catch (ActivityNotFoundException exception){
-                    Toast.makeText(getApplicationContext(), "No hay una aplicacion vinculada "
-                            + "para asginarle el tono", Toast.LENGTH_LONG).show();
-                }
+        Generar_rigntone.setOnClickListener(view -> {
+            try{
+                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Seleccionar Tono");
+                startActivityForResult(intent,5);
+            }catch (ActivityNotFoundException exception){
+                Toast.makeText(getApplicationContext(), "No hay una aplicacion vinculada "
+                        + "para asginarle el tono", Toast.LENGTH_LONG).show();
             }
         });
 
         Button Reproducir_cancion = findViewById(R.id.Reproducir_cancion);
-        Reproducir_cancion.setOnClickListener(new View.OnClickListener() {
+        Reproducir_cancion.setOnClickListener(view -> {
+            try{
+                Intent intent_abrir_cancion = new Intent();
+                intent_abrir_cancion.setAction(Intent.ACTION_VIEW);
+                intent_abrir_cancion.setDataAndType(Uri.parse(path), "audio/*");
+                startActivity(intent_abrir_cancion);
 
-            @Override
-            public void onClick(View view) {
-                try{
-                    Intent intent_abrir_cancion = new Intent();
-                    intent_abrir_cancion.setAction(android.content.Intent.ACTION_VIEW);
-                    intent_abrir_cancion.setDataAndType(Uri.parse(path), "audio/*");
-                    startActivity(intent_abrir_cancion);
-
-                }catch (ActivityNotFoundException exception){
-                    Toast.makeText(getApplicationContext(), "No hay una aplicacion vinculada "
-                            + "para abrir la cancion", Toast.LENGTH_LONG).show();
-                }
+            }catch (ActivityNotFoundException exception){
+                Toast.makeText(getApplicationContext(), "No hay una aplicacion vinculada "
+                        + "para abrir la cancion", Toast.LENGTH_LONG).show();
             }
         });
-
 
         return true;
     }
@@ -197,19 +181,32 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
-
     public void Definir_inputs_Cortar(){
         inicio = findViewById(R.id.inicio);
         fin = findViewById(R.id.fin);
     }
 
 
+    public boolean isStoragePermissionGranted() {
 
-<<<<<<< HEAD
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        } else {
+            return true;
+        }
     }
 
 
-=======
+
+
 }
->>>>>>> 61355ce78464ad2430c65871c22b0ff60ff65b08
+
+

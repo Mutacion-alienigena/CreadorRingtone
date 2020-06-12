@@ -42,6 +42,7 @@ private TextView text;
             FFmpeg ffmpeg = FFmpeg.getInstance(context);
             ffmpeg.execute(comando, new ExecuteBinaryResponseHandler() {
 
+
                 @Override
                 public void onStart() {}
 
@@ -53,6 +54,7 @@ private TextView text;
 
                 @Override
                 public void onFailure(String message) {
+      System.out.println(message);
                     Toast.makeText(context, "Ocurrio un error cortando la cancion",
                             Toast.LENGTH_LONG).show();
                 }
@@ -72,7 +74,7 @@ private TextView text;
 
 
         } else {
-            text.setText("No es soportado, por pete, comprate un mejor celular rata");
+            text.setText("No es soportado");
         }
 
 
