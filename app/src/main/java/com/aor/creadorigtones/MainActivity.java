@@ -31,12 +31,9 @@ import com.aor.creadorigtones.ui.home.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-<<<<<<< HEAD
 import com.yausername.youtubedl_android.YoutubeDL;
 import com.yausername.youtubedl_android.YoutubeDLException;
 import com.yausername.youtubedl_android.YoutubeDLRequest;
-=======
->>>>>>> parent of 41be83c... Cambios 11/06
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -193,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean isStoragePermissionGranted() {
 
 
-<<<<<<< HEAD
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
@@ -214,8 +210,3 @@ public class MainActivity extends AppCompatActivity {
 }
 
 
-=======
-    }
-
-
->>>>>>> parent of 41be83c... Cambios 11/06
